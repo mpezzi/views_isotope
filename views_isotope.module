@@ -1,0 +1,20 @@
+<?php
+// $id:
+
+/**
+ * @file
+ * TODO
+ */
+
+/**
+ * Implements hook_views_api().
+ */
+function views_isotope_views_api() {
+  return array(
+    'api' => 2.0,
+  );
+}
+
+/**
+ * 
+ */
