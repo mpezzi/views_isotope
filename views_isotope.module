@@ -14,7 +14,3 @@ function views_isotope_views_api() {
     'api' => 2.0,
   );
 }
-
-/**
- * 
- */

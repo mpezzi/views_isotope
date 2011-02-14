@@ -2,12 +2,7 @@
 name = Views Isotope
 description = Create isotope views from views queries.
 package = Views
-core = 7.x
+core = 6.x
 
 dependencies[] = views
 dependencies[] = libraries
-
-files[] = views_isotope.module
-files[] = views_isotope.views.inc
-files[] = views_isotope.theme.inc
-files[] = views_isotope_plugin_style_isotope.inc
