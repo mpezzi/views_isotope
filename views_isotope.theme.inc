@@ -21,14 +21,22 @@ function template_preprocess_views_isotope(&$vars) {
   
   $settings = array();
   
+  $sortable_fields = array();
   foreach ( $rows as $id => $row ) {
-    $vars['attributes'][$id] = array(
-      'data-weight' => $handler->rendered_fields[$id]['field_weight_value'],
-      'data-category' => $handler->rendered_fields[$id]['tid'],
-    );
+    foreach ( $options['sortable_fields'] as $field ) {
+      if ( $field ) {
+        $vars['attributes'][$id]['data-' . $field] = $handler->rendered_fields[$id][$field];
+        $vars['sortable_fields'][$field] = $field;
+      }
+    }
     
-    $vars['classes'][$id] .= ' ' . strtolower($handler->rendered_fields[$id]['tid']);
+    // $vars['classes'][$id] .= ' ' . strtolower($handler->rendered_fields[$id]['tid']);
   }
   
-  drupal_add_js(array('views_isotope' => array('#' . $vars['isotope_id'] => array())), 'setting');
+  $config = array(
+    'settings' => $settings,
+    'sortable_fields' => $vars['sortable_fields'],
+  );
+  
+  drupal_add_js(array('views_isotope' => array('#' . $vars['isotope_id'] => $config)), 'setting');
 }

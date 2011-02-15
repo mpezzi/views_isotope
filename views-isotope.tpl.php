@@ -1,12 +1,17 @@
 <?php
 // $Id:
 
+
+
 ?>
 
-<ul style="padding-top: 100px">
-  <li id="sort-weight">Sort by Weight</li>
-  <li id="sort-category">Sort by Category</li>
-</ul>
+<?php if ( count($sortable_fields) ): ?>
+  <ul class="views-isotope-sort" style="padding-top: 100px">
+  <?php foreach ( $sortable_fields as $field ): ?>
+    <li id="sort-<?php print $field; ?>" data-field="<?php print $field; ?>"><?php print t('Sort by %field', array('%field' => $field)); ?></li>
+  <?php endforeach; ?>
+  </ul>
+<?php endif; ?>
 
 <div class="views-isotope">
   <<?php print $options['type']; ?> class="views-isotope-container" id="<?php print $isotope_id; ?>">

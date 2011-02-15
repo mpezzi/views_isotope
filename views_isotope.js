@@ -2,33 +2,30 @@
  * Implements of Drupal.behaviors
  */
 Drupal.behaviors.views_isotope = function() {
-  jQuery.each(Drupal.settings.views_isotope, function(selector, options){
-    var settings = $.extend(options, {
+  jQuery.each(Drupal.settings.views_isotope, function(selector, config){
+    var isotope = $(selector),
+        sortData = {};
+    
+    // Create sort functions for data sorting.
+    jQuery.each(config.sortable_fields, function(k, v){
+      sortData[k] = function(e) {
+        return e.attr('data-' + v);
+      };
+    });
+    
+    // Create settings.
+    var settings = $.extend(config.settings, {
       animationEngine: $.browser.opera ? 'jquery' : 'best-available',
-      getSortData: {
-        category: function(e) {
-          return e.attr('data-category');
-        },
-        weight: function(e) {
-          return e.attr('data-weight');
-        }
-      }
+      getSortData: sortData
     });
     
-    $('#sort-weight').click(function(){
-      $(selector).isotope({
-        sortBy: 'weight',
+    $('.views-isotope-sort li').click(function(){
+      isotope.isotope({
+        sortBy: $(this).attr('data-field'),
         sortAscending: true
-      });
+      })
     });
     
-    $('#sort-category').click(function(){
-      $(selector).isotope({
-        sortBy: 'category',
-        sortAscending: true
-      });
-    });
-    
-    $(selector + ':not(.views-isotope-processed)').addClass('views-isotope-processed').isotope(settings);
+    isotope.not('.views-isotope-processed').addClass('views-isotope-processed').isotope(settings);
   });
 };
