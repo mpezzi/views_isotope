@@ -26,7 +26,7 @@ function template_preprocess_views_isotope(&$vars) {
     foreach ( $options['sortable_fields'] as $field ) {
       if ( $field ) {
         $vars['attributes'][$id]['data-' . $field] = $handler->rendered_fields[$id][$field];
-        $vars['sortable_fields'][$field] = $field;
+        $vars['sortable_fields'][$field] = $fields[$field]->options['label'];
       }
     }
     

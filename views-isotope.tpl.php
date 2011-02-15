@@ -7,8 +7,8 @@
 
 <?php if ( count($sortable_fields) ): ?>
   <ul class="views-isotope-sort" style="padding-top: 100px">
-  <?php foreach ( $sortable_fields as $field ): ?>
-    <li id="sort-<?php print $field; ?>" data-field="<?php print $field; ?>"><?php print t('Sort by %field', array('%field' => $field)); ?></li>
+  <?php foreach ( $sortable_fields as $field => $label ): ?>
+    <li id="sort-<?php print $field; ?>" data-field="<?php print $field; ?>"><?php print t('Sort by %label', array('%label' => $label)); ?></li>
   <?php endforeach; ?>
   </ul>
 <?php endif; ?>
