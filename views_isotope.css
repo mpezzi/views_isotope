@@ -8,7 +8,7 @@
   margin: 0;
   padding: 0 0 5px 0;
   list-style: none;
-  background: transparent url(shadow-100-short.png) bottom center no-repeat;;
+  background: none;
 }
 
 .views-isotope li div.item {
