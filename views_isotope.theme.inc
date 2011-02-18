@@ -21,16 +21,15 @@ function template_preprocess_views_isotope(&$vars) {
   
   $settings = array();
   
-  $sortable_fields = array();
+  $vars['attributes'] = array();
+  $vars['sortable_fields'] = array();
   foreach ( $rows as $id => $row ) {
     foreach ( $options['sortable_fields'] as $field ) {
-      if ( $field ) {
+      if ( $field && isset($handler->rendered_fields[$id][$field]) ) {
         $vars['attributes'][$id]['data-' . $field] = $handler->rendered_fields[$id][$field];
         $vars['sortable_fields'][$field] = $fields[$field]->options['label'];
       }
     }
-    
-    // $vars['classes'][$id] .= ' ' . strtolower($handler->rendered_fields[$id]['tid']);
   }
   
   $config = array(
