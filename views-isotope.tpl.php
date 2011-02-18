@@ -16,7 +16,7 @@
 <div class="views-isotope">
   <<?php print $options['type']; ?> class="views-isotope-container" id="<?php print $isotope_id; ?>">
     <?php foreach ( $rows as $id => $row ): ?>
-      <li class="<?php print $classes[$id]; ?>" <?php print drupal_attributes($attributes[$id]); ?>>
+      <li class="<?php print $classes[$id]; ?>" <?php if ( isset($attributes[$id]) ) print drupal_attributes($attributes[$id]); ?>>
         <div class="item"><?php print $row; ?></div>
       </li>
     <?php endforeach; ?>
