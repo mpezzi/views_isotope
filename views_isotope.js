@@ -9,7 +9,7 @@ Drupal.behaviors.views_isotope = function() {
     // Create sort functions for data sorting.
     jQuery.each(config.sortable_fields, function(k, v){
       sortData[k] = function(e) {
-        return e.attr('data-' + k);
+        return parseInt(e.attr('data-' + k));
       };
     });
     
