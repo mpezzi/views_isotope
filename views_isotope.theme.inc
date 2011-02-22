@@ -15,7 +15,6 @@ function template_preprocess_views_isotope(&$vars) {
   
   $vars['isotope_id'] = 'views-isotope-' . $view->name . '-' . $view->style_plugin->display->id;
   
-  $settings = array();
   $vars['attributes'] = array();
   $vars['sortable_fields'] = array();
   foreach ( $rows as $id => $row ) {
@@ -27,30 +26,44 @@ function template_preprocess_views_isotope(&$vars) {
     }
   }
   
+  $skins = views_isotope_get_skins();
+  
+  // Get skin.
+  if ( isset($options['skin']) && isset($skins[$options['skin']]) ) {
+    $skin = $skins[$options['skin']];
+  }
+  
   $config = array(
-    'settings' => $settings,
+    'settings' => $skin['settings'],
     'sortable_fields' => $vars['sortable_fields'],
     'sort' => $options['sort'],
   );
   
   // Set skin class.
-  $vars['skin_class'] = 'views-isotope-' . $options['skin']['name'];
+  $vars['skin_class'] = 'views-isotope-' . $options['skin'];
+  
+  // Get skin path.
+  $path = drupal_get_path('module', $skin['module']);
+  if ( isset($skin['path']) && !empty($skin['path']) ) {
+    $path .= '/' . $skin['path'];
+  }
   
   // Get stylesheets.
   drupal_add_css(drupal_get_path('module', 'views_isotope') . '/views_isotope.css');
-  if ( !empty($options['skin']['css']) && is_array($options['skin']['css']) ) {
-    $path = drupal_get_path('module', $options['skin']['module']);
-    if ( $options['skin']['path'] ) {
-      $path .= '/' . $options['skin']['path'];
-    }
-    
-    foreach ( $options['skin']['css'] as $file ) {
+  if ( !empty($skin['css']) && is_array($skin['css']) ) {
+    foreach ( $skin['css'] as $file ) {
       drupal_add_css($path . '/' . $file);
     }
   }
   
+  // Add JavaScript files and settings.
   drupal_add_js(libraries_get_path('jquery.isotope') . '/jquery.isotope.js');
   drupal_add_js(drupal_get_path('module', 'views_isotope') . '/views_isotope.js');
+  if ( !empty($skin['js']) && is_array($skin['js']) ) {
+    foreach ( $skin['js'] as $file ) {
+      drupal_add_js($path . '/' . $file);
+    }
+  }
   
   drupal_add_js(array('views_isotope' => array('#' . $vars['isotope_id'] => $config)), 'setting');
 }

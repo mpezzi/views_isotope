@@ -62,17 +62,6 @@ class views_isotope_plugin_style_isotope extends views_plugin_style_list {
     );
     
   }
-  
-  /**
-   * Submit handler.
-   */
-  function options_submit($form, &$form_state) {
-    $skins = views_isotope_get_skins();
-    
-    $name = $form_state['values']['style_options']['skin'];
-    $form_state['values']['style_options']['skin'] = $skins[$name];
-    $form_state['values']['style_options']['skin']['name'] = $name;
-  }
 }
 
 /**
@@ -90,6 +79,8 @@ function views_isotope_get_skins($op = 'list') {
           $items[$skin] += array(
             'title' => t('Untitled skin'),
             'css' => array(),
+            'js' => array(),
+            'settings' => array(),
             'path' => '',
             'module' => $module,
           );

@@ -22,8 +22,12 @@ function views_isotope_views_isotope_skins() {
   return array(
     'flat' => array(
       'title' => t('Flat'),
-      'css' => array(
-        'views_isotope_flat.css',
+      'css' => array('views_isotope_flat.css'),
+      'js' => array('views_isotope_flat.js'),
+      'settings' => array(
+        'masonry' => array(
+          'columnWidth' => 100,
+        ),
       ),
       'path' => 'skins/flat',
     ),
