@@ -33,6 +33,9 @@ function template_preprocess_views_isotope(&$vars) {
     'sort' => $options['sort'],
   );
   
+  // Set skin class.
+  $vars['skin_class'] = 'views-isotope-' . $options['skin']['name'];
+  
   // Get stylesheets.
   drupal_add_css(drupal_get_path('module', 'views_isotope') . '/views_isotope.css');
   if ( !empty($options['skin']['css']) && is_array($options['skin']['css']) ) {

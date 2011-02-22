@@ -68,7 +68,10 @@ class views_isotope_plugin_style_isotope extends views_plugin_style_list {
    */
   function options_submit($form, &$form_state) {
     $skins = views_isotope_get_skins();
-    $form_state['values']['style_options']['skin'] = $skins[$form_state['values']['style_options']['skin']];
+    
+    $name = $form_state['values']['style_options']['skin'];
+    $form_state['values']['style_options']['skin'] = $skins[$name];
+    $form_state['values']['style_options']['skin']['name'] = $name;
   }
 }
 
