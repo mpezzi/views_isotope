@@ -1,3 +1,7 @@
+.views-isotope-flat ul.views-isotope-container {
+  clear: both;
+}
+
 .views-isotope-flat div.item {
   width: 80px;
   height: 80px;
@@ -18,6 +22,33 @@
   background: -moz-linear-gradient(top, #f2f6f8 0%, #d8e1e7 50%, #b5c6d0 51%, #e0eff9 100%); /* firefox */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f6f8), color-stop(50%,#d8e1e7), color-stop(51%,#b5c6d0), color-stop(100%,#e0eff9)); /* webkit */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f6f8', endColorstr='#e0eff9',GradientType=0 ); /* ie */
+}
+
+/* Sort
+--------------------------------------------- */
+.views-isotope-flat ul.views-isotope-sort {
+  float: right;
+  height: 2.5em;
+  margin: 0;
+  padding: 0;
+}
+
+.views-isotope-flat ul.views-isotope-sort li {
+  float: left;
+  margin-left: 1em;
+  cursor: pointer;
+}
+
+/* Sizes
+--------------------------------------------- */
+.views-isotope-flat div.item-medium {
+  width: 180px;
+  height: 180px;
+}
+
+.views-isotope-flat div.item-large {
+  width: 280px;
+  height: 280px;
 }
 
 /* CSS3 Animations
