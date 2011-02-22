@@ -95,7 +95,7 @@ function views_isotope_get_skins($op = 'list') {
   
   if ( empty($skins) ) {
     $skins = array();
-    foreach ( module_implements('views_isotope_skins') as $implementation ) {
+    foreach ( $hooks as $implementation ) {
       $items = call_user_func($implementation . '_views_isotope_skins');
       if ( isset($items) && is_array($items) ) {
         foreach ( array_keys($items) as $skin ) {
