@@ -14,3 +14,18 @@ function views_isotope_views_api() {
     'api' => 2.0,
   );
 }
+
+/**
+ * Implements hook_views_isotope_skins().
+ */
+function views_isotope_views_isotope_skins() {
+  return array(
+    'flat' => array(
+      'title' => t('Flat'),
+      'css' => array(
+        'views_isotope_flat.css',
+      ),
+      'path' => 'skins/flat',
+    ),
+  );
+}

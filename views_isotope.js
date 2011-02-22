@@ -22,7 +22,7 @@ Drupal.behaviors.views_isotope = function() {
     $('.views-isotope-sort li').click(function(){
       isotope.isotope({
         sortBy: $(this).attr('data-field'),
-        sortAscending: false
+        sortAscending: config.sort
       })
     });
     
