@@ -5,4 +5,5 @@ package = Views
 core = 6.x
 
 dependencies[] = views
+dependencies[] = jquery_update
 dependencies[] = libraries
