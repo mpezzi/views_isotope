@@ -12,7 +12,7 @@ Drupal.behaviors.views_isotope = function() {
       };
     });
     
-    // Append default settings.
+    // Append default settings and sorting data.
     var settings = $.extend(config.settings, {
       animationEngine: $.browser.opera ? 'jquery' : 'best-available',
       getSortData: sortData
@@ -20,7 +20,7 @@ Drupal.behaviors.views_isotope = function() {
     
     isotope.not('.views-isotope-processed').addClass('views-isotope-processed').isotope(settings);
     
-    $('.views-isotope-sort li').click(function(){
+    $('.views-isotope-sort li', selector).click(function(){
       isotope.isotope({
         sortBy: $(this).attr('data-field'),
         sortAscending: config.sort
