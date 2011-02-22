@@ -57,7 +57,7 @@ function template_preprocess_views_isotope(&$vars) {
   }
   
   // Add JavaScript files and settings.
-  drupal_add_js(libraries_get_path('jquery.isotope') . '/jquery.isotope.js');
+  drupal_add_js(libraries_get_path('jquery.isotope') . '/jquery.isotope.min.js');
   drupal_add_js(drupal_get_path('module', 'views_isotope') . '/views_isotope.js');
   if ( !empty($skin['js']) && is_array($skin['js']) ) {
     foreach ( $skin['js'] as $file ) {
