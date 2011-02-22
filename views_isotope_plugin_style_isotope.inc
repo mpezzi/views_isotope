@@ -68,12 +68,35 @@ class views_isotope_plugin_style_isotope extends views_plugin_style_list {
  * Retrieve a list of all available skins in the system.
  */
 function views_isotope_get_skins($op = 'list') {
+  global $theme_key;
   static $skins;
+  
+  $hook = 'views_isotope_skins';
+  $hooks = module_implements($hook);
+  
+  // Collect theme hooks.
+  $themes = list_themes();
+  if ( isset($themes[$theme_key]->base_themes) ) {
+    $theme_keys = array_keys($themes[$theme_key]->base_themes);
+    $theme_keys[] = $theme_keys;
+  }
+  else {
+    $theme_keys = array($theme_key);
+  }
+  
+  // Filter out theme hooks that don't exist.
+  foreach ( $theme_keys as $key => $theme ) {
+    if ( !function_exists($theme . '_' . $hook) ) {
+      unset($theme_keys[$key]);
+    }
+  }
+  
+  $hooks = array_merge($hooks, $theme_keys);
   
   if ( empty($skins) ) {
     $skins = array();
-    foreach ( module_implements('views_isotope_skins') as $module ) {
-      $items = call_user_func($module . '_views_isotope_skins');
+    foreach ( module_implements('views_isotope_skins') as $implementation ) {
+      $items = call_user_func($implementation . '_views_isotope_skins');
       if ( isset($items) && is_array($items) ) {
         foreach ( array_keys($items) as $skin ) {
           $items[$skin] += array(
@@ -82,7 +105,8 @@ function views_isotope_get_skins($op = 'list') {
             'js' => array(),
             'settings' => array(),
             'path' => '',
-            'module' => $module,
+            'implementation' => $implementation,
+            'type' => isset($themes[$implementation]) ? 'theme' : 'module',
           );
         }
         $skins = array_merge($skins, $items);

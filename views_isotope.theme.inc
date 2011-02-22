@@ -43,7 +43,7 @@ function template_preprocess_views_isotope(&$vars) {
   $vars['skin_class'] = 'views-isotope-' . $options['skin'];
   
   // Get skin path.
-  $path = drupal_get_path('module', $skin['module']);
+  $path = drupal_get_path($skin['type'], $skin['implementation']);
   if ( isset($skin['path']) && !empty($skin['path']) ) {
     $path .= '/' . $skin['path'];
   }
