@@ -32,6 +32,10 @@ function template_preprocess_views_isotope(&$vars) {
   if ( isset($options['skin']) && isset($skins[$options['skin']]) ) {
     $skin = $skins[$options['skin']];
   }
+  else {
+    $skin = $skins['flat'];
+    $options['skin'] = 'flat';
+  }
   
   $config = array(
     'settings' => $skin['settings'],
