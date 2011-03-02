@@ -81,13 +81,19 @@ function views_isotope_get_skins($op = 'list') {
     $theme_keys[] = $theme_keys;
   }
   else {
-    $theme_keys = array($theme_key);
+    $theme_keys = array(variable_get('theme_default', 'none'));
   }
   
   // Filter out theme hooks that don't exist.
   foreach ( $theme_keys as $key => $theme ) {
-    if ( !function_exists($theme . '_' . $hook) ) {
-      unset($theme_keys[$key]);
+    $template_file = drupal_get_path('theme', $theme) . '/template.php';
+    
+    if ( file_exists($template_file) ) {
+      include_once $template_file;
+      
+      if ( !function_exists($theme . '_' . $hook) ) {
+        unset($theme_keys[$key]);
+      }
     }
   }
   
