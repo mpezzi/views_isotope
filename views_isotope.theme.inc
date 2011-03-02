@@ -12,16 +12,30 @@ function template_preprocess_views_isotope(&$vars) {
   $handler = $view->style_plugin;
   $fields = &$view->field;
   $rows = &$vars['rows'];
+  $vars['attributes'] = array();
   
   $vars['isotope_id'] = 'views-isotope-' . $view->name . '-' . $view->style_plugin->display->id;
   
-  $vars['attributes'] = array();
-  $vars['sortable_fields'] = array();
+  $vars['sortable_fields'] = $vars['filterable_fields'] = array();
+  
   foreach ( $rows as $id => $row ) {
+    
+    // Sortable fields.
     foreach ( $options['sortable_fields'] as $field ) {
       if ( $field && isset($handler->rendered_fields[$id][$field]) ) {
         $vars['attributes'][$id]['data-' . $field] = $handler->rendered_fields[$id][$field];
         $vars['sortable_fields'][$field] = $fields[$field]->options['label'];
+      }
+    }
+    
+    // Filterable fields.
+    foreach ( $options['filterable_fields'] as $field ) {
+      if ( $field && isset($handler->rendered_fields[$id][$field]) ) {
+        $filter_class = str_replace(array('][', '_', ' '), '-', strtolower($handler->rendered_fields[$id][$field]));
+        
+        $vars['classes'][$id] .= ' filter-' . $filter_class;
+        $vars['filterable_fields'][$field] = $fields[$field]->options['label'];
+        $vars['filter_classes'][$field][$filter_class] = $handler->rendered_fields[$id][$field];
       }
     }
   }

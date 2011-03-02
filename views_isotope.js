@@ -27,5 +27,11 @@ Drupal.behaviors.views_isotope = function() {
       })
     });
     
+    $('.views-isotope-filter ul li', selector).click(function(){
+      isotope.isotope({
+        filter: $(this).attr('data-filter')
+      });
+    });
+    
   });
 };

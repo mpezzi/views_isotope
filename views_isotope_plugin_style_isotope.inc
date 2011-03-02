@@ -16,6 +16,7 @@ class views_isotope_plugin_style_isotope extends views_plugin_style_list {
     $options = parent::option_definition();
     
     $options['sortable_fields'] = array('default' => array());
+    $options['filterable_fields'] = array('default' => array());
     $options['sort'] = array('default' => 0);
     
     return $options;
@@ -44,6 +45,14 @@ class views_isotope_plugin_style_isotope extends views_plugin_style_list {
       '#description' => t('Fields that are sortable via Isotope'),
       '#options' => $fields,
       '#default_value' => $this->options['sortable_fields'],
+    );
+    
+    $form['filterable_fields'] = array(
+      '#type' => 'checkboxes',
+      '#title' => t('Filterable Fields'),
+      '#description' => t('Fields that are filterable via Isotope'),
+      '#options' => $fields,
+      '#default_value' => $this->options['filterable_fields'],
     );
     
     $form['sort'] = array(

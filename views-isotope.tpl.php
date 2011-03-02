@@ -7,6 +7,14 @@
     </ul>
   <?php endif; ?>
   
+  <?php if ( count($filterable_fields) ): ?>
+    <ul class="views-isotope-filter">
+    <?php foreach ( $filterable_fields as $field => $label ): ?>
+      <li id="sort-<?php print $field; ?>" data-field="<?php print $field; ?>"><?php print t('Filter by %label', array('%label' => $label)); ?></li>
+    <?php endforeach; ?>
+    </ul>
+  <?php endif; ?>
+  
   <<?php print $options['type']; ?> class="views-isotope-container">
     <?php foreach ( $rows as $id => $row ): ?>
       <li class="<?php print $classes[$id]; ?>" <?php if ( isset($attributes[$id]) ) print drupal_attributes($attributes[$id]); ?>>
