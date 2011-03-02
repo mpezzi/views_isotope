@@ -31,11 +31,20 @@ function template_preprocess_views_isotope(&$vars) {
     // Filterable fields.
     foreach ( $options['filterable_fields'] as $field ) {
       if ( $field && isset($handler->rendered_fields[$id][$field]) ) {
-        $filter_class = str_replace(array('][', '_', ' '), '-', strtolower($handler->rendered_fields[$id][$field]));
+        if ( isset($fields[$field]->options['type']) && $fields[$field]->options['type'] == 'separator' ) {
+          $filters = explode($fields[$field]->options['separator'], $handler->rendered_fields[$id][$field]);
+        }
+        else {
+          $filters = array($handler->rendered_fields[$id][$field]);
+        }
         
-        $vars['classes'][$id] .= ' filter-' . $filter_class;
+        foreach ( $filters as $filter ) {
+          $filter_class = str_replace(array('][', '_', ' '), '-', strtolower($filter));
+          $vars['filter_classes'][$field][$filter_class] = $filter;
+          $vars['classes'][$id] .= ' filter-' . $filter_class;
+        }
+        
         $vars['filterable_fields'][$field] = $fields[$field]->options['label'];
-        $vars['filter_classes'][$field][$filter_class] = $handler->rendered_fields[$id][$field];
       }
     }
   }
