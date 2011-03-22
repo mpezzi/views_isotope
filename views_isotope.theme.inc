@@ -24,7 +24,12 @@ function template_preprocess_views_isotope(&$vars) {
     foreach ( $options['sortable_fields'] as $field ) {
       if ( $field && isset($handler->rendered_fields[$id][$field]) ) {
         $vars['attributes'][$id]['data-' . $field] = $handler->rendered_fields[$id][$field];
-        $vars['sortable_fields'][$field] = $fields[$field]->options['label'];
+        
+        $vars['sortable_fields'][$field]['label'] = $fields[$field]->options['label'];
+        $vars['sortable_fields'][$field]['attributes']['data-field'] = $field;
+        $vars['sortable_fields'][$field]['attributes']['data-sort'] = $options['sortable_fields_order'][$field] ? 'desc' : 'asc';
+        
+        
       }
     }
     
@@ -39,9 +44,11 @@ function template_preprocess_views_isotope(&$vars) {
         }
         
         foreach ( $filters as $filter ) {
-          $filter_class = str_replace(array('][', '_', ' '), '-', strtolower($filter));
-          $vars['filter_classes'][$field][$filter_class] = $filter;
-          $vars['classes'][$id] .= ' filter-' . $filter_class;
+          if ( !empty($filter) ) {
+            $filter_class = str_replace(array('][', '_', ' '), '-', strtolower($filter));
+            $vars['filter_classes'][$field][$filter_class] = $filter;
+            $vars['classes'][$id] .= ' filter-' . $filter_class;
+          }
         }
         
         $vars['filterable_fields'][$field] = $fields[$field]->options['label'];

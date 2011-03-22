@@ -21,16 +21,20 @@ Drupal.behaviors.views_isotope = function() {
     isotope.not('.views-isotope-processed').addClass('views-isotope-processed').isotope(settings);
     
     $('.views-isotope-sort li', selector).click(function(){
-      isotope.isotope({
-        sortBy: $(this).attr('data-field'),
-        sortAscending: config.sort
-      })
+      if ( $(this).attr('data-field') != '' ) {
+        isotope.isotope({
+          sortBy: $(this).attr('data-field'),
+          sortAscending: ( $(this).data('sort') == 'asc' )
+        });
+      }
     });
     
     $('.views-isotope-filter ul li', selector).click(function(){
-      isotope.isotope({
-        filter: $(this).attr('data-filter')
-      });
+      if ( $(this).attr('data-filter') != '' ) {
+        isotope.isotope({
+          filter: $(this).attr('data-filter')
+        });
+      }
     });
     
   });
