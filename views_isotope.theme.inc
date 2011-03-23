@@ -12,16 +12,46 @@ function template_preprocess_views_isotope(&$vars) {
   $handler = $view->style_plugin;
   $fields = &$view->field;
   $rows = &$vars['rows'];
+  $vars['attributes'] = array();
   
   $vars['isotope_id'] = 'views-isotope-' . $view->name . '-' . $view->style_plugin->display->id;
   
-  $vars['attributes'] = array();
-  $vars['sortable_fields'] = array();
+  $vars['sortable_fields'] = $vars['filterable_fields'] = array();
+  
   foreach ( $rows as $id => $row ) {
+    
+    // Sortable fields.
     foreach ( $options['sortable_fields'] as $field ) {
       if ( $field && isset($handler->rendered_fields[$id][$field]) ) {
         $vars['attributes'][$id]['data-' . $field] = $handler->rendered_fields[$id][$field];
-        $vars['sortable_fields'][$field] = $fields[$field]->options['label'];
+        
+        $vars['sortable_fields'][$field]['label'] = $fields[$field]->options['label'];
+        $vars['sortable_fields'][$field]['attributes']['data-field'] = $field;
+        $vars['sortable_fields'][$field]['attributes']['data-sort'] = $options['sortable_fields_order'][$field] ? 'desc' : 'asc';
+        
+        
+      }
+    }
+    
+    // Filterable fields.
+    foreach ( $options['filterable_fields'] as $field ) {
+      if ( $field && isset($handler->rendered_fields[$id][$field]) ) {
+        if ( isset($fields[$field]->options['type']) && $fields[$field]->options['type'] == 'separator' ) {
+          $filters = explode($fields[$field]->options['separator'], $handler->rendered_fields[$id][$field]);
+        }
+        else {
+          $filters = array($handler->rendered_fields[$id][$field]);
+        }
+        
+        foreach ( $filters as $filter ) {
+          if ( !empty($filter) ) {
+            $filter_class = str_replace(array('][', '_', ' '), '-', strtolower($filter));
+            $vars['filter_classes'][$field][$filter_class] = $filter;
+            $vars['classes'][$id] .= ' filter-' . $filter_class;
+          }
+        }
+        
+        $vars['filterable_fields'][$field] = $fields[$field]->options['label'];
       }
     }
   }

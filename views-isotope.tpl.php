@@ -2,7 +2,15 @@
   <?php if ( count($sortable_fields) ): ?>
     <ul class="views-isotope-sort">
     <?php foreach ( $sortable_fields as $field => $label ): ?>
-      <li id="sort-<?php print $field; ?>" data-field="<?php print $field; ?>"><?php print t('Sort by %label', array('%label' => $label)); ?></li>
+      <li id="sort-<?php print $name; ?>" <?php if ( isset($field['attributes']) ) print drupal_attributes($field['attributes']); ?>><?php print t('Sort by %label', array('%label' => $field['label'])); ?></li>
+    <?php endforeach; ?>
+    </ul>
+  <?php endif; ?>
+  
+  <?php if ( count($filterable_fields) ): ?>
+    <ul class="views-isotope-filter">
+    <?php foreach ( $filterable_fields as $field => $label ): ?>
+      <li id="sort-<?php print $field; ?>" data-field="<?php print $field; ?>"><?php print t('Filter by %label', array('%label' => $label)); ?></li>
     <?php endforeach; ?>
     </ul>
   <?php endif; ?>

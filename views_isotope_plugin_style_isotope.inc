@@ -16,6 +16,8 @@ class views_isotope_plugin_style_isotope extends views_plugin_style_list {
     $options = parent::option_definition();
     
     $options['sortable_fields'] = array('default' => array());
+    $options['sortable_fields_order'] = array('default' => array());
+    $options['filterable_fields'] = array('default' => array());
     $options['sort'] = array('default' => 0);
     
     return $options;
@@ -44,6 +46,22 @@ class views_isotope_plugin_style_isotope extends views_plugin_style_list {
       '#description' => t('Fields that are sortable via Isotope'),
       '#options' => $fields,
       '#default_value' => $this->options['sortable_fields'],
+    );
+    
+    $form['sortable_fields_order'] = array(
+      '#type' => 'checkboxes',
+      '#title' => t('Sortable Fields Reverse Order'),
+      '#description' => t('Field sort order'),
+      '#options' => $fields,
+      '#default_value' => $this->options['sortable_fields_order'],
+    );
+    
+    $form['filterable_fields'] = array(
+      '#type' => 'checkboxes',
+      '#title' => t('Filterable Fields'),
+      '#description' => t('Fields that are filterable via Isotope'),
+      '#options' => $fields,
+      '#default_value' => $this->options['filterable_fields'],
     );
     
     $form['sort'] = array(
@@ -95,9 +113,15 @@ function views_isotope_get_skins($op = 'list') {
         unset($theme_keys[$key]);
       }
     }
+    
+    if ( is_array($theme) ) {
+      unset($theme_keys[$key]);
+    }
   }
   
-  $hooks = array_merge($hooks, $theme_keys);
+  if ( count($theme_keys) > 0 ) {
+    $hooks = array_merge($hooks, $theme_keys);
+  }
   
   if ( empty($skins) ) {
     $skins = array();
